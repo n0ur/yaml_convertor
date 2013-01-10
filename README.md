@@ -14,33 +14,32 @@ The resulting simple key:value hash looks like this:
 ````
 {"fruit.lemon"=>"yellow", "fruit.apple.red_apples"=>"red"}
 ````
-
 This works the other way around, too: if you had the simple hash; you can reconstruct the YAML hash structure.
 
 ## Installation
 
 Add this line to your application's Gemfile:
-
+````
     gem 'yaml_convertor'
-
+````
 And then execute:
-
+````
     $ bundle
-
+````
 Or install it yourself as:
-
+````
     $ gem install yaml_convertor
-
+````
 ## Usage
 
 There are two methods you can use:
-- flattener converts the structured nested YAML hash to a simple key:value
+- **flattener** converts the structured nested YAML hash to a simple key:value
 
 ````
 YamlConvertor.flattener(yml_hash)
 ````
 
-- builder rebuilds the simple hash to a nested YAML structure
+- **builder** rebuilds the simple hash to a nested YAML structure
 
 ````
 YamlConvertor.builder(flat_hash)
@@ -48,8 +47,7 @@ YamlConvertor.builder(flat_hash)
 
 ## Example
 
-Let's assume we have a YAML file called "file.yml":
-
+Let's assume we have a YAML file called **file.yml**:
 ````
 en:
   errors:
@@ -63,15 +61,11 @@ en:
     sessions:
       signed_in: 'Signed in successfully.'
 ````
-
 We open this file using Psych (Ruby's YAML parser), and it will return a nested YAML hash structure
-
 ````ruby
 yml_hash = Psych.load_file('file.yml')
 ````
-
 yml_hash looks like this:
-
 ````
 {"en"=>{
   "errors"=>{
@@ -86,15 +80,11 @@ yml_hash looks like this:
   }
 }
 ````
-
 Now! If we use flattener:
-
 ````
 flat_hash = YamlConvertor.flattener(yml_hash)
 ````
-
 flat_hash will look like this:
-
 ````
 {
   "en.errors.messages.not_locked"=>"was not locked", 
@@ -108,14 +98,11 @@ flat_hash will look like this:
 
 Now let's assume we have a flat hash and we want to rebuild it to a YAML file.
 Here's our flat_hash from our example above:
-
 ````ruby
 flat_hash = {"en.errors.messages.not_locked"=>"was not locked", "en.errors.messages.not_saved.other"=>"other error", "en.devise.failure.already_authenticated"=>"You are already signed in.", "en.devise.sessions.signed_in"=>"Signed in successfully."}
-
 nested_hash = YamlConvertor.builder(flat_hash)
 ````
 nested_hash is now:
-
 ````
 {"en"=>{
   "errors"=>{
@@ -130,13 +117,10 @@ nested_hash is now:
   }
 }
 ````
-
 Dump it with Pysch..
-
 ````ruby
 Psych.dump(nested_hash)
 ````
-
 The output will be:
 ````
 ---
