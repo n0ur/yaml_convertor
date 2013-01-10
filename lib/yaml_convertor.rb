@@ -1,5 +1,4 @@
 require 'yaml_convertor/version'
-require 'psych'
 
 module YamlConvertor
   def self.flattener(nested_hash)
